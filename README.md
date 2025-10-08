@@ -157,4 +157,6 @@ Full interactive documentation is available at [`/swagger/`](https://backend-4wa
 **Ozkan Cimenli**  
 📧 cimenliozkan1@gmail.com
 
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?logo=linkedin)](https://www.linkedin.com/in/ozkancimenli/)
+
 Contributions, issues, and feature requests are welcome — open them on the respective backend or frontend repositories.
