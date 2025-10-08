@@ -1,0 +1,2068 @@
+EEEEEE                                                                   [100%]
+==================================== ERRORS ====================================
+____________________ ERROR at setup of test_create_project _____________________
+
+self = <DatabaseWrapper vendor='postgresql' alias='__no_db__'>
+
+    @async_unsafe
+    def ensure_connection(self):
+        """Guarantee that a connection to the database is established."""
+        if self.connection is None:
+            with self.wrap_database_errors:
+>               self.connect()
+
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:288: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:269: in connect
+    self.connection = self.get_new_connection(conn_params)
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/postgresql/base.py:275: in get_new_connection
+    connection = self.Database.connect(**conn_params)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dsn = 'dbname=postgres sslmode=require channel_binding=require client_encoding=UTF8 user=neondb_owner password=npg_l6LZFUwSa2Dt host=ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech'
+connection_factory = None, cursor_factory = <class 'psycopg2.extensions.cursor'>
+kwargs = {'channel_binding': 'require', 'client_encoding': 'UTF8', 'dbname': 'postgres', 'host': 'ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech', ...}
+kwasync = {}
+
+    def connect(dsn=None, connection_factory=None, cursor_factory=None, **kwargs):
+        """
+        Create a new database connection.
+    
+        The connection parameters can be specified as a string:
+    
+            conn = psycopg2.connect("dbname=test user=postgres password=secret")
+    
+        or using a set of keyword arguments:
+    
+            conn = psycopg2.connect(database="test", user="postgres", password="secret")
+    
+        Or as a mix of both. The basic connection parameters are:
+    
+        - *dbname*: the database name
+        - *database*: the database name (only as keyword argument)
+        - *user*: user name used to authenticate
+        - *password*: password used to authenticate
+        - *host*: database host address (defaults to UNIX socket if not provided)
+        - *port*: connection port number (defaults to 5432 if not provided)
+    
+        Using the *connection_factory* parameter a different class or connections
+        factory can be specified. It should be a callable object taking a dsn
+        argument.
+    
+        Using the *cursor_factory* parameter, a new default cursor factory will be
+        used by cursor().
+    
+        Using *async*=True an asynchronous connection will be created. *async_* is
+        a valid alias (for Python versions where ``async`` is a keyword).
+    
+        Any other keyword parameter will be passed to the underlying client
+        library: the list of supported parameters depends on the library version.
+    
+        """
+        kwasync = {}
+        if 'async' in kwargs:
+            kwasync['async'] = kwargs.pop('async')
+        if 'async_' in kwargs:
+            kwasync['async_'] = kwargs.pop('async_')
+    
+        dsn = _ext.make_dsn(dsn, **kwargs)
+>       conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+E       psycopg2.OperationalError: could not translate host name "ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech" to address: nodename nor servname provided, or not known
+
+venv/lib/python3.9/site-packages/psycopg2/__init__.py:122: OperationalError
+
+The above exception was the direct cause of the following exception:
+
+self = <DatabaseWrapper vendor='postgresql' alias='default'>
+
+    @contextmanager
+    def _nodb_cursor(self):
+        cursor = None
+        try:
+>           with super()._nodb_cursor() as cursor:
+
+venv/lib/python3.9/site-packages/django/db/backends/postgresql/base.py:400: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../../micromamba/lib/python3.9/contextlib.py:119: in __enter__
+    return next(self.gen)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:721: in _nodb_cursor
+    with conn.cursor() as cursor:
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:329: in cursor
+    return self._cursor()
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:305: in _cursor
+    self.ensure_connection()
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:288: in ensure_connection
+    self.connect()
+venv/lib/python3.9/site-packages/django/db/utils.py:91: in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:288: in ensure_connection
+    self.connect()
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:269: in connect
+    self.connection = self.get_new_connection(conn_params)
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/postgresql/base.py:275: in get_new_connection
+    connection = self.Database.connect(**conn_params)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dsn = 'dbname=postgres sslmode=require channel_binding=require client_encoding=UTF8 user=neondb_owner password=npg_l6LZFUwSa2Dt host=ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech'
+connection_factory = None, cursor_factory = <class 'psycopg2.extensions.cursor'>
+kwargs = {'channel_binding': 'require', 'client_encoding': 'UTF8', 'dbname': 'postgres', 'host': 'ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech', ...}
+kwasync = {}
+
+    def connect(dsn=None, connection_factory=None, cursor_factory=None, **kwargs):
+        """
+        Create a new database connection.
+    
+        The connection parameters can be specified as a string:
+    
+            conn = psycopg2.connect("dbname=test user=postgres password=secret")
+    
+        or using a set of keyword arguments:
+    
+            conn = psycopg2.connect(database="test", user="postgres", password="secret")
+    
+        Or as a mix of both. The basic connection parameters are:
+    
+        - *dbname*: the database name
+        - *database*: the database name (only as keyword argument)
+        - *user*: user name used to authenticate
+        - *password*: password used to authenticate
+        - *host*: database host address (defaults to UNIX socket if not provided)
+        - *port*: connection port number (defaults to 5432 if not provided)
+    
+        Using the *connection_factory* parameter a different class or connections
+        factory can be specified. It should be a callable object taking a dsn
+        argument.
+    
+        Using the *cursor_factory* parameter, a new default cursor factory will be
+        used by cursor().
+    
+        Using *async*=True an asynchronous connection will be created. *async_* is
+        a valid alias (for Python versions where ``async`` is a keyword).
+    
+        Any other keyword parameter will be passed to the underlying client
+        library: the list of supported parameters depends on the library version.
+    
+        """
+        kwasync = {}
+        if 'async' in kwargs:
+            kwasync['async'] = kwargs.pop('async')
+        if 'async_' in kwargs:
+            kwasync['async_'] = kwargs.pop('async_')
+    
+        dsn = _ext.make_dsn(dsn, **kwargs)
+>       conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+E       django.db.utils.OperationalError: could not translate host name "ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech" to address: nodename nor servname provided, or not known
+
+venv/lib/python3.9/site-packages/psycopg2/__init__.py:122: OperationalError
+
+During handling of the above exception, another exception occurred:
+
+self = <DatabaseWrapper vendor='postgresql' alias='default'>
+
+    @async_unsafe
+    def ensure_connection(self):
+        """Guarantee that a connection to the database is established."""
+        if self.connection is None:
+            with self.wrap_database_errors:
+>               self.connect()
+
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:288: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:269: in connect
+    self.connection = self.get_new_connection(conn_params)
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/postgresql/base.py:275: in get_new_connection
+    connection = self.Database.connect(**conn_params)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dsn = 'dbname=tasktrackr sslmode=require channel_binding=require client_encoding=UTF8 user=neondb_owner password=npg_l6LZFUwSa2Dt host=ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech'
+connection_factory = None, cursor_factory = <class 'psycopg2.extensions.cursor'>
+kwargs = {'channel_binding': 'require', 'client_encoding': 'UTF8', 'dbname': 'tasktrackr', 'host': 'ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech', ...}
+kwasync = {}
+
+    def connect(dsn=None, connection_factory=None, cursor_factory=None, **kwargs):
+        """
+        Create a new database connection.
+    
+        The connection parameters can be specified as a string:
+    
+            conn = psycopg2.connect("dbname=test user=postgres password=secret")
+    
+        or using a set of keyword arguments:
+    
+            conn = psycopg2.connect(database="test", user="postgres", password="secret")
+    
+        Or as a mix of both. The basic connection parameters are:
+    
+        - *dbname*: the database name
+        - *database*: the database name (only as keyword argument)
+        - *user*: user name used to authenticate
+        - *password*: password used to authenticate
+        - *host*: database host address (defaults to UNIX socket if not provided)
+        - *port*: connection port number (defaults to 5432 if not provided)
+    
+        Using the *connection_factory* parameter a different class or connections
+        factory can be specified. It should be a callable object taking a dsn
+        argument.
+    
+        Using the *cursor_factory* parameter, a new default cursor factory will be
+        used by cursor().
+    
+        Using *async*=True an asynchronous connection will be created. *async_* is
+        a valid alias (for Python versions where ``async`` is a keyword).
+    
+        Any other keyword parameter will be passed to the underlying client
+        library: the list of supported parameters depends on the library version.
+    
+        """
+        kwasync = {}
+        if 'async' in kwargs:
+            kwasync['async'] = kwargs.pop('async')
+        if 'async_' in kwargs:
+            kwasync['async_'] = kwargs.pop('async_')
+    
+        dsn = _ext.make_dsn(dsn, **kwargs)
+>       conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+E       psycopg2.OperationalError: could not translate host name "ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech" to address: nodename nor servname provided, or not known
+
+venv/lib/python3.9/site-packages/psycopg2/__init__.py:122: OperationalError
+
+The above exception was the direct cause of the following exception:
+
+request = <SubRequest '_django_db_marker' for <Function test_create_project>>
+
+    @pytest.fixture(autouse=True)
+    def _django_db_marker(request: pytest.FixtureRequest) -> None:
+        """Implement the django_db marker, internal to pytest-django."""
+        marker = request.node.get_closest_marker("django_db")
+        if marker:
+>           request.getfixturevalue("_django_db_helper")
+
+venv/lib/python3.9/site-packages/pytest_django/plugin.py:552: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+venv/lib/python3.9/site-packages/pytest_django/fixtures.py:198: in django_db_setup
+    db_cfg = setup_databases(
+venv/lib/python3.9/site-packages/django/test/utils.py:221: in setup_databases
+    connection.creation.create_test_db(
+venv/lib/python3.9/site-packages/django/db/backends/base/creation.py:62: in create_test_db
+    self._create_test_db(verbosity, autoclobber, keepdb)
+venv/lib/python3.9/site-packages/django/db/backends/base/creation.py:199: in _create_test_db
+    with self._nodb_cursor() as cursor:
+../../../../micromamba/lib/python3.9/contextlib.py:119: in __enter__
+    return next(self.gen)
+venv/lib/python3.9/site-packages/django/db/backends/postgresql/base.py:426: in _nodb_cursor
+    with conn.cursor() as cursor:
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:329: in cursor
+    return self._cursor()
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:305: in _cursor
+    self.ensure_connection()
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:288: in ensure_connection
+    self.connect()
+venv/lib/python3.9/site-packages/django/db/utils.py:91: in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:288: in ensure_connection
+    self.connect()
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:269: in connect
+    self.connection = self.get_new_connection(conn_params)
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/postgresql/base.py:275: in get_new_connection
+    connection = self.Database.connect(**conn_params)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dsn = 'dbname=tasktrackr sslmode=require channel_binding=require client_encoding=UTF8 user=neondb_owner password=npg_l6LZFUwSa2Dt host=ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech'
+connection_factory = None, cursor_factory = <class 'psycopg2.extensions.cursor'>
+kwargs = {'channel_binding': 'require', 'client_encoding': 'UTF8', 'dbname': 'tasktrackr', 'host': 'ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech', ...}
+kwasync = {}
+
+    def connect(dsn=None, connection_factory=None, cursor_factory=None, **kwargs):
+        """
+        Create a new database connection.
+    
+        The connection parameters can be specified as a string:
+    
+            conn = psycopg2.connect("dbname=test user=postgres password=secret")
+    
+        or using a set of keyword arguments:
+    
+            conn = psycopg2.connect(database="test", user="postgres", password="secret")
+    
+        Or as a mix of both. The basic connection parameters are:
+    
+        - *dbname*: the database name
+        - *database*: the database name (only as keyword argument)
+        - *user*: user name used to authenticate
+        - *password*: password used to authenticate
+        - *host*: database host address (defaults to UNIX socket if not provided)
+        - *port*: connection port number (defaults to 5432 if not provided)
+    
+        Using the *connection_factory* parameter a different class or connections
+        factory can be specified. It should be a callable object taking a dsn
+        argument.
+    
+        Using the *cursor_factory* parameter, a new default cursor factory will be
+        used by cursor().
+    
+        Using *async*=True an asynchronous connection will be created. *async_* is
+        a valid alias (for Python versions where ``async`` is a keyword).
+    
+        Any other keyword parameter will be passed to the underlying client
+        library: the list of supported parameters depends on the library version.
+    
+        """
+        kwasync = {}
+        if 'async' in kwargs:
+            kwasync['async'] = kwargs.pop('async')
+        if 'async_' in kwargs:
+            kwasync['async_'] = kwargs.pop('async_')
+    
+        dsn = _ext.make_dsn(dsn, **kwargs)
+>       conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+E       django.db.utils.OperationalError: could not translate host name "ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech" to address: nodename nor servname provided, or not known
+
+venv/lib/python3.9/site-packages/psycopg2/__init__.py:122: OperationalError
+___________________ ERROR at setup of test_get_projects_list ___________________
+
+self = <DatabaseWrapper vendor='postgresql' alias='__no_db__'>
+
+    @async_unsafe
+    def ensure_connection(self):
+        """Guarantee that a connection to the database is established."""
+        if self.connection is None:
+            with self.wrap_database_errors:
+>               self.connect()
+
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:288: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:269: in connect
+    self.connection = self.get_new_connection(conn_params)
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/postgresql/base.py:275: in get_new_connection
+    connection = self.Database.connect(**conn_params)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dsn = 'dbname=postgres sslmode=require channel_binding=require client_encoding=UTF8 user=neondb_owner password=npg_l6LZFUwSa2Dt host=ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech'
+connection_factory = None, cursor_factory = <class 'psycopg2.extensions.cursor'>
+kwargs = {'channel_binding': 'require', 'client_encoding': 'UTF8', 'dbname': 'postgres', 'host': 'ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech', ...}
+kwasync = {}
+
+    def connect(dsn=None, connection_factory=None, cursor_factory=None, **kwargs):
+        """
+        Create a new database connection.
+    
+        The connection parameters can be specified as a string:
+    
+            conn = psycopg2.connect("dbname=test user=postgres password=secret")
+    
+        or using a set of keyword arguments:
+    
+            conn = psycopg2.connect(database="test", user="postgres", password="secret")
+    
+        Or as a mix of both. The basic connection parameters are:
+    
+        - *dbname*: the database name
+        - *database*: the database name (only as keyword argument)
+        - *user*: user name used to authenticate
+        - *password*: password used to authenticate
+        - *host*: database host address (defaults to UNIX socket if not provided)
+        - *port*: connection port number (defaults to 5432 if not provided)
+    
+        Using the *connection_factory* parameter a different class or connections
+        factory can be specified. It should be a callable object taking a dsn
+        argument.
+    
+        Using the *cursor_factory* parameter, a new default cursor factory will be
+        used by cursor().
+    
+        Using *async*=True an asynchronous connection will be created. *async_* is
+        a valid alias (for Python versions where ``async`` is a keyword).
+    
+        Any other keyword parameter will be passed to the underlying client
+        library: the list of supported parameters depends on the library version.
+    
+        """
+        kwasync = {}
+        if 'async' in kwargs:
+            kwasync['async'] = kwargs.pop('async')
+        if 'async_' in kwargs:
+            kwasync['async_'] = kwargs.pop('async_')
+    
+        dsn = _ext.make_dsn(dsn, **kwargs)
+>       conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+E       psycopg2.OperationalError: could not translate host name "ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech" to address: nodename nor servname provided, or not known
+
+venv/lib/python3.9/site-packages/psycopg2/__init__.py:122: OperationalError
+
+The above exception was the direct cause of the following exception:
+
+self = <DatabaseWrapper vendor='postgresql' alias='default'>
+
+    @contextmanager
+    def _nodb_cursor(self):
+        cursor = None
+        try:
+>           with super()._nodb_cursor() as cursor:
+
+venv/lib/python3.9/site-packages/django/db/backends/postgresql/base.py:400: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../../micromamba/lib/python3.9/contextlib.py:119: in __enter__
+    return next(self.gen)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:721: in _nodb_cursor
+    with conn.cursor() as cursor:
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:329: in cursor
+    return self._cursor()
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:305: in _cursor
+    self.ensure_connection()
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:288: in ensure_connection
+    self.connect()
+venv/lib/python3.9/site-packages/django/db/utils.py:91: in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:288: in ensure_connection
+    self.connect()
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:269: in connect
+    self.connection = self.get_new_connection(conn_params)
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/postgresql/base.py:275: in get_new_connection
+    connection = self.Database.connect(**conn_params)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dsn = 'dbname=postgres sslmode=require channel_binding=require client_encoding=UTF8 user=neondb_owner password=npg_l6LZFUwSa2Dt host=ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech'
+connection_factory = None, cursor_factory = <class 'psycopg2.extensions.cursor'>
+kwargs = {'channel_binding': 'require', 'client_encoding': 'UTF8', 'dbname': 'postgres', 'host': 'ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech', ...}
+kwasync = {}
+
+    def connect(dsn=None, connection_factory=None, cursor_factory=None, **kwargs):
+        """
+        Create a new database connection.
+    
+        The connection parameters can be specified as a string:
+    
+            conn = psycopg2.connect("dbname=test user=postgres password=secret")
+    
+        or using a set of keyword arguments:
+    
+            conn = psycopg2.connect(database="test", user="postgres", password="secret")
+    
+        Or as a mix of both. The basic connection parameters are:
+    
+        - *dbname*: the database name
+        - *database*: the database name (only as keyword argument)
+        - *user*: user name used to authenticate
+        - *password*: password used to authenticate
+        - *host*: database host address (defaults to UNIX socket if not provided)
+        - *port*: connection port number (defaults to 5432 if not provided)
+    
+        Using the *connection_factory* parameter a different class or connections
+        factory can be specified. It should be a callable object taking a dsn
+        argument.
+    
+        Using the *cursor_factory* parameter, a new default cursor factory will be
+        used by cursor().
+    
+        Using *async*=True an asynchronous connection will be created. *async_* is
+        a valid alias (for Python versions where ``async`` is a keyword).
+    
+        Any other keyword parameter will be passed to the underlying client
+        library: the list of supported parameters depends on the library version.
+    
+        """
+        kwasync = {}
+        if 'async' in kwargs:
+            kwasync['async'] = kwargs.pop('async')
+        if 'async_' in kwargs:
+            kwasync['async_'] = kwargs.pop('async_')
+    
+        dsn = _ext.make_dsn(dsn, **kwargs)
+>       conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+E       django.db.utils.OperationalError: could not translate host name "ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech" to address: nodename nor servname provided, or not known
+
+venv/lib/python3.9/site-packages/psycopg2/__init__.py:122: OperationalError
+
+During handling of the above exception, another exception occurred:
+
+self = <DatabaseWrapper vendor='postgresql' alias='default'>
+
+    @async_unsafe
+    def ensure_connection(self):
+        """Guarantee that a connection to the database is established."""
+        if self.connection is None:
+            with self.wrap_database_errors:
+>               self.connect()
+
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:288: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:269: in connect
+    self.connection = self.get_new_connection(conn_params)
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/postgresql/base.py:275: in get_new_connection
+    connection = self.Database.connect(**conn_params)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dsn = 'dbname=tasktrackr sslmode=require channel_binding=require client_encoding=UTF8 user=neondb_owner password=npg_l6LZFUwSa2Dt host=ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech'
+connection_factory = None, cursor_factory = <class 'psycopg2.extensions.cursor'>
+kwargs = {'channel_binding': 'require', 'client_encoding': 'UTF8', 'dbname': 'tasktrackr', 'host': 'ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech', ...}
+kwasync = {}
+
+    def connect(dsn=None, connection_factory=None, cursor_factory=None, **kwargs):
+        """
+        Create a new database connection.
+    
+        The connection parameters can be specified as a string:
+    
+            conn = psycopg2.connect("dbname=test user=postgres password=secret")
+    
+        or using a set of keyword arguments:
+    
+            conn = psycopg2.connect(database="test", user="postgres", password="secret")
+    
+        Or as a mix of both. The basic connection parameters are:
+    
+        - *dbname*: the database name
+        - *database*: the database name (only as keyword argument)
+        - *user*: user name used to authenticate
+        - *password*: password used to authenticate
+        - *host*: database host address (defaults to UNIX socket if not provided)
+        - *port*: connection port number (defaults to 5432 if not provided)
+    
+        Using the *connection_factory* parameter a different class or connections
+        factory can be specified. It should be a callable object taking a dsn
+        argument.
+    
+        Using the *cursor_factory* parameter, a new default cursor factory will be
+        used by cursor().
+    
+        Using *async*=True an asynchronous connection will be created. *async_* is
+        a valid alias (for Python versions where ``async`` is a keyword).
+    
+        Any other keyword parameter will be passed to the underlying client
+        library: the list of supported parameters depends on the library version.
+    
+        """
+        kwasync = {}
+        if 'async' in kwargs:
+            kwasync['async'] = kwargs.pop('async')
+        if 'async_' in kwargs:
+            kwasync['async_'] = kwargs.pop('async_')
+    
+        dsn = _ext.make_dsn(dsn, **kwargs)
+>       conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+E       psycopg2.OperationalError: could not translate host name "ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech" to address: nodename nor servname provided, or not known
+
+venv/lib/python3.9/site-packages/psycopg2/__init__.py:122: OperationalError
+
+The above exception was the direct cause of the following exception:
+
+request = <SubRequest '_django_db_marker' for <Function test_get_projects_list>>
+
+    @pytest.fixture(autouse=True)
+    def _django_db_marker(request: pytest.FixtureRequest) -> None:
+        """Implement the django_db marker, internal to pytest-django."""
+        marker = request.node.get_closest_marker("django_db")
+        if marker:
+>           request.getfixturevalue("_django_db_helper")
+
+venv/lib/python3.9/site-packages/pytest_django/plugin.py:552: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+venv/lib/python3.9/site-packages/pytest_django/fixtures.py:198: in django_db_setup
+    db_cfg = setup_databases(
+venv/lib/python3.9/site-packages/django/test/utils.py:221: in setup_databases
+    connection.creation.create_test_db(
+venv/lib/python3.9/site-packages/django/db/backends/base/creation.py:62: in create_test_db
+    self._create_test_db(verbosity, autoclobber, keepdb)
+venv/lib/python3.9/site-packages/django/db/backends/base/creation.py:199: in _create_test_db
+    with self._nodb_cursor() as cursor:
+../../../../micromamba/lib/python3.9/contextlib.py:119: in __enter__
+    return next(self.gen)
+venv/lib/python3.9/site-packages/django/db/backends/postgresql/base.py:426: in _nodb_cursor
+    with conn.cursor() as cursor:
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:329: in cursor
+    return self._cursor()
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:305: in _cursor
+    self.ensure_connection()
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:288: in ensure_connection
+    self.connect()
+venv/lib/python3.9/site-packages/django/db/utils.py:91: in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:288: in ensure_connection
+    self.connect()
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:269: in connect
+    self.connection = self.get_new_connection(conn_params)
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/postgresql/base.py:275: in get_new_connection
+    connection = self.Database.connect(**conn_params)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dsn = 'dbname=tasktrackr sslmode=require channel_binding=require client_encoding=UTF8 user=neondb_owner password=npg_l6LZFUwSa2Dt host=ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech'
+connection_factory = None, cursor_factory = <class 'psycopg2.extensions.cursor'>
+kwargs = {'channel_binding': 'require', 'client_encoding': 'UTF8', 'dbname': 'tasktrackr', 'host': 'ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech', ...}
+kwasync = {}
+
+    def connect(dsn=None, connection_factory=None, cursor_factory=None, **kwargs):
+        """
+        Create a new database connection.
+    
+        The connection parameters can be specified as a string:
+    
+            conn = psycopg2.connect("dbname=test user=postgres password=secret")
+    
+        or using a set of keyword arguments:
+    
+            conn = psycopg2.connect(database="test", user="postgres", password="secret")
+    
+        Or as a mix of both. The basic connection parameters are:
+    
+        - *dbname*: the database name
+        - *database*: the database name (only as keyword argument)
+        - *user*: user name used to authenticate
+        - *password*: password used to authenticate
+        - *host*: database host address (defaults to UNIX socket if not provided)
+        - *port*: connection port number (defaults to 5432 if not provided)
+    
+        Using the *connection_factory* parameter a different class or connections
+        factory can be specified. It should be a callable object taking a dsn
+        argument.
+    
+        Using the *cursor_factory* parameter, a new default cursor factory will be
+        used by cursor().
+    
+        Using *async*=True an asynchronous connection will be created. *async_* is
+        a valid alias (for Python versions where ``async`` is a keyword).
+    
+        Any other keyword parameter will be passed to the underlying client
+        library: the list of supported parameters depends on the library version.
+    
+        """
+        kwasync = {}
+        if 'async' in kwargs:
+            kwasync['async'] = kwargs.pop('async')
+        if 'async_' in kwargs:
+            kwasync['async_'] = kwargs.pop('async_')
+    
+        dsn = _ext.make_dsn(dsn, **kwargs)
+>       conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+E       django.db.utils.OperationalError: could not translate host name "ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech" to address: nodename nor servname provided, or not known
+
+venv/lib/python3.9/site-packages/psycopg2/__init__.py:122: OperationalError
+______________________ ERROR at setup of test_create_task ______________________
+
+self = <DatabaseWrapper vendor='postgresql' alias='__no_db__'>
+
+    @async_unsafe
+    def ensure_connection(self):
+        """Guarantee that a connection to the database is established."""
+        if self.connection is None:
+            with self.wrap_database_errors:
+>               self.connect()
+
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:288: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:269: in connect
+    self.connection = self.get_new_connection(conn_params)
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/postgresql/base.py:275: in get_new_connection
+    connection = self.Database.connect(**conn_params)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dsn = 'dbname=postgres sslmode=require channel_binding=require client_encoding=UTF8 user=neondb_owner password=npg_l6LZFUwSa2Dt host=ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech'
+connection_factory = None, cursor_factory = <class 'psycopg2.extensions.cursor'>
+kwargs = {'channel_binding': 'require', 'client_encoding': 'UTF8', 'dbname': 'postgres', 'host': 'ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech', ...}
+kwasync = {}
+
+    def connect(dsn=None, connection_factory=None, cursor_factory=None, **kwargs):
+        """
+        Create a new database connection.
+    
+        The connection parameters can be specified as a string:
+    
+            conn = psycopg2.connect("dbname=test user=postgres password=secret")
+    
+        or using a set of keyword arguments:
+    
+            conn = psycopg2.connect(database="test", user="postgres", password="secret")
+    
+        Or as a mix of both. The basic connection parameters are:
+    
+        - *dbname*: the database name
+        - *database*: the database name (only as keyword argument)
+        - *user*: user name used to authenticate
+        - *password*: password used to authenticate
+        - *host*: database host address (defaults to UNIX socket if not provided)
+        - *port*: connection port number (defaults to 5432 if not provided)
+    
+        Using the *connection_factory* parameter a different class or connections
+        factory can be specified. It should be a callable object taking a dsn
+        argument.
+    
+        Using the *cursor_factory* parameter, a new default cursor factory will be
+        used by cursor().
+    
+        Using *async*=True an asynchronous connection will be created. *async_* is
+        a valid alias (for Python versions where ``async`` is a keyword).
+    
+        Any other keyword parameter will be passed to the underlying client
+        library: the list of supported parameters depends on the library version.
+    
+        """
+        kwasync = {}
+        if 'async' in kwargs:
+            kwasync['async'] = kwargs.pop('async')
+        if 'async_' in kwargs:
+            kwasync['async_'] = kwargs.pop('async_')
+    
+        dsn = _ext.make_dsn(dsn, **kwargs)
+>       conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+E       psycopg2.OperationalError: could not translate host name "ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech" to address: nodename nor servname provided, or not known
+
+venv/lib/python3.9/site-packages/psycopg2/__init__.py:122: OperationalError
+
+The above exception was the direct cause of the following exception:
+
+self = <DatabaseWrapper vendor='postgresql' alias='default'>
+
+    @contextmanager
+    def _nodb_cursor(self):
+        cursor = None
+        try:
+>           with super()._nodb_cursor() as cursor:
+
+venv/lib/python3.9/site-packages/django/db/backends/postgresql/base.py:400: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../../micromamba/lib/python3.9/contextlib.py:119: in __enter__
+    return next(self.gen)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:721: in _nodb_cursor
+    with conn.cursor() as cursor:
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:329: in cursor
+    return self._cursor()
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:305: in _cursor
+    self.ensure_connection()
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:288: in ensure_connection
+    self.connect()
+venv/lib/python3.9/site-packages/django/db/utils.py:91: in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:288: in ensure_connection
+    self.connect()
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:269: in connect
+    self.connection = self.get_new_connection(conn_params)
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/postgresql/base.py:275: in get_new_connection
+    connection = self.Database.connect(**conn_params)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dsn = 'dbname=postgres sslmode=require channel_binding=require client_encoding=UTF8 user=neondb_owner password=npg_l6LZFUwSa2Dt host=ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech'
+connection_factory = None, cursor_factory = <class 'psycopg2.extensions.cursor'>
+kwargs = {'channel_binding': 'require', 'client_encoding': 'UTF8', 'dbname': 'postgres', 'host': 'ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech', ...}
+kwasync = {}
+
+    def connect(dsn=None, connection_factory=None, cursor_factory=None, **kwargs):
+        """
+        Create a new database connection.
+    
+        The connection parameters can be specified as a string:
+    
+            conn = psycopg2.connect("dbname=test user=postgres password=secret")
+    
+        or using a set of keyword arguments:
+    
+            conn = psycopg2.connect(database="test", user="postgres", password="secret")
+    
+        Or as a mix of both. The basic connection parameters are:
+    
+        - *dbname*: the database name
+        - *database*: the database name (only as keyword argument)
+        - *user*: user name used to authenticate
+        - *password*: password used to authenticate
+        - *host*: database host address (defaults to UNIX socket if not provided)
+        - *port*: connection port number (defaults to 5432 if not provided)
+    
+        Using the *connection_factory* parameter a different class or connections
+        factory can be specified. It should be a callable object taking a dsn
+        argument.
+    
+        Using the *cursor_factory* parameter, a new default cursor factory will be
+        used by cursor().
+    
+        Using *async*=True an asynchronous connection will be created. *async_* is
+        a valid alias (for Python versions where ``async`` is a keyword).
+    
+        Any other keyword parameter will be passed to the underlying client
+        library: the list of supported parameters depends on the library version.
+    
+        """
+        kwasync = {}
+        if 'async' in kwargs:
+            kwasync['async'] = kwargs.pop('async')
+        if 'async_' in kwargs:
+            kwasync['async_'] = kwargs.pop('async_')
+    
+        dsn = _ext.make_dsn(dsn, **kwargs)
+>       conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+E       django.db.utils.OperationalError: could not translate host name "ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech" to address: nodename nor servname provided, or not known
+
+venv/lib/python3.9/site-packages/psycopg2/__init__.py:122: OperationalError
+
+During handling of the above exception, another exception occurred:
+
+self = <DatabaseWrapper vendor='postgresql' alias='default'>
+
+    @async_unsafe
+    def ensure_connection(self):
+        """Guarantee that a connection to the database is established."""
+        if self.connection is None:
+            with self.wrap_database_errors:
+>               self.connect()
+
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:288: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:269: in connect
+    self.connection = self.get_new_connection(conn_params)
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/postgresql/base.py:275: in get_new_connection
+    connection = self.Database.connect(**conn_params)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dsn = 'dbname=tasktrackr sslmode=require channel_binding=require client_encoding=UTF8 user=neondb_owner password=npg_l6LZFUwSa2Dt host=ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech'
+connection_factory = None, cursor_factory = <class 'psycopg2.extensions.cursor'>
+kwargs = {'channel_binding': 'require', 'client_encoding': 'UTF8', 'dbname': 'tasktrackr', 'host': 'ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech', ...}
+kwasync = {}
+
+    def connect(dsn=None, connection_factory=None, cursor_factory=None, **kwargs):
+        """
+        Create a new database connection.
+    
+        The connection parameters can be specified as a string:
+    
+            conn = psycopg2.connect("dbname=test user=postgres password=secret")
+    
+        or using a set of keyword arguments:
+    
+            conn = psycopg2.connect(database="test", user="postgres", password="secret")
+    
+        Or as a mix of both. The basic connection parameters are:
+    
+        - *dbname*: the database name
+        - *database*: the database name (only as keyword argument)
+        - *user*: user name used to authenticate
+        - *password*: password used to authenticate
+        - *host*: database host address (defaults to UNIX socket if not provided)
+        - *port*: connection port number (defaults to 5432 if not provided)
+    
+        Using the *connection_factory* parameter a different class or connections
+        factory can be specified. It should be a callable object taking a dsn
+        argument.
+    
+        Using the *cursor_factory* parameter, a new default cursor factory will be
+        used by cursor().
+    
+        Using *async*=True an asynchronous connection will be created. *async_* is
+        a valid alias (for Python versions where ``async`` is a keyword).
+    
+        Any other keyword parameter will be passed to the underlying client
+        library: the list of supported parameters depends on the library version.
+    
+        """
+        kwasync = {}
+        if 'async' in kwargs:
+            kwasync['async'] = kwargs.pop('async')
+        if 'async_' in kwargs:
+            kwasync['async_'] = kwargs.pop('async_')
+    
+        dsn = _ext.make_dsn(dsn, **kwargs)
+>       conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+E       psycopg2.OperationalError: could not translate host name "ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech" to address: nodename nor servname provided, or not known
+
+venv/lib/python3.9/site-packages/psycopg2/__init__.py:122: OperationalError
+
+The above exception was the direct cause of the following exception:
+
+request = <SubRequest '_django_db_marker' for <Function test_create_task>>
+
+    @pytest.fixture(autouse=True)
+    def _django_db_marker(request: pytest.FixtureRequest) -> None:
+        """Implement the django_db marker, internal to pytest-django."""
+        marker = request.node.get_closest_marker("django_db")
+        if marker:
+>           request.getfixturevalue("_django_db_helper")
+
+venv/lib/python3.9/site-packages/pytest_django/plugin.py:552: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+venv/lib/python3.9/site-packages/pytest_django/fixtures.py:198: in django_db_setup
+    db_cfg = setup_databases(
+venv/lib/python3.9/site-packages/django/test/utils.py:221: in setup_databases
+    connection.creation.create_test_db(
+venv/lib/python3.9/site-packages/django/db/backends/base/creation.py:62: in create_test_db
+    self._create_test_db(verbosity, autoclobber, keepdb)
+venv/lib/python3.9/site-packages/django/db/backends/base/creation.py:199: in _create_test_db
+    with self._nodb_cursor() as cursor:
+../../../../micromamba/lib/python3.9/contextlib.py:119: in __enter__
+    return next(self.gen)
+venv/lib/python3.9/site-packages/django/db/backends/postgresql/base.py:426: in _nodb_cursor
+    with conn.cursor() as cursor:
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:329: in cursor
+    return self._cursor()
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:305: in _cursor
+    self.ensure_connection()
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:288: in ensure_connection
+    self.connect()
+venv/lib/python3.9/site-packages/django/db/utils.py:91: in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:288: in ensure_connection
+    self.connect()
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:269: in connect
+    self.connection = self.get_new_connection(conn_params)
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/postgresql/base.py:275: in get_new_connection
+    connection = self.Database.connect(**conn_params)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dsn = 'dbname=tasktrackr sslmode=require channel_binding=require client_encoding=UTF8 user=neondb_owner password=npg_l6LZFUwSa2Dt host=ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech'
+connection_factory = None, cursor_factory = <class 'psycopg2.extensions.cursor'>
+kwargs = {'channel_binding': 'require', 'client_encoding': 'UTF8', 'dbname': 'tasktrackr', 'host': 'ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech', ...}
+kwasync = {}
+
+    def connect(dsn=None, connection_factory=None, cursor_factory=None, **kwargs):
+        """
+        Create a new database connection.
+    
+        The connection parameters can be specified as a string:
+    
+            conn = psycopg2.connect("dbname=test user=postgres password=secret")
+    
+        or using a set of keyword arguments:
+    
+            conn = psycopg2.connect(database="test", user="postgres", password="secret")
+    
+        Or as a mix of both. The basic connection parameters are:
+    
+        - *dbname*: the database name
+        - *database*: the database name (only as keyword argument)
+        - *user*: user name used to authenticate
+        - *password*: password used to authenticate
+        - *host*: database host address (defaults to UNIX socket if not provided)
+        - *port*: connection port number (defaults to 5432 if not provided)
+    
+        Using the *connection_factory* parameter a different class or connections
+        factory can be specified. It should be a callable object taking a dsn
+        argument.
+    
+        Using the *cursor_factory* parameter, a new default cursor factory will be
+        used by cursor().
+    
+        Using *async*=True an asynchronous connection will be created. *async_* is
+        a valid alias (for Python versions where ``async`` is a keyword).
+    
+        Any other keyword parameter will be passed to the underlying client
+        library: the list of supported parameters depends on the library version.
+    
+        """
+        kwasync = {}
+        if 'async' in kwargs:
+            kwasync['async'] = kwargs.pop('async')
+        if 'async_' in kwargs:
+            kwasync['async_'] = kwargs.pop('async_')
+    
+        dsn = _ext.make_dsn(dsn, **kwargs)
+>       conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+E       django.db.utils.OperationalError: could not translate host name "ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech" to address: nodename nor servname provided, or not known
+
+venv/lib/python3.9/site-packages/psycopg2/__init__.py:122: OperationalError
+____________________ ERROR at setup of test_get_tasks_list _____________________
+
+self = <DatabaseWrapper vendor='postgresql' alias='__no_db__'>
+
+    @async_unsafe
+    def ensure_connection(self):
+        """Guarantee that a connection to the database is established."""
+        if self.connection is None:
+            with self.wrap_database_errors:
+>               self.connect()
+
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:288: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:269: in connect
+    self.connection = self.get_new_connection(conn_params)
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/postgresql/base.py:275: in get_new_connection
+    connection = self.Database.connect(**conn_params)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dsn = 'dbname=postgres sslmode=require channel_binding=require client_encoding=UTF8 user=neondb_owner password=npg_l6LZFUwSa2Dt host=ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech'
+connection_factory = None, cursor_factory = <class 'psycopg2.extensions.cursor'>
+kwargs = {'channel_binding': 'require', 'client_encoding': 'UTF8', 'dbname': 'postgres', 'host': 'ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech', ...}
+kwasync = {}
+
+    def connect(dsn=None, connection_factory=None, cursor_factory=None, **kwargs):
+        """
+        Create a new database connection.
+    
+        The connection parameters can be specified as a string:
+    
+            conn = psycopg2.connect("dbname=test user=postgres password=secret")
+    
+        or using a set of keyword arguments:
+    
+            conn = psycopg2.connect(database="test", user="postgres", password="secret")
+    
+        Or as a mix of both. The basic connection parameters are:
+    
+        - *dbname*: the database name
+        - *database*: the database name (only as keyword argument)
+        - *user*: user name used to authenticate
+        - *password*: password used to authenticate
+        - *host*: database host address (defaults to UNIX socket if not provided)
+        - *port*: connection port number (defaults to 5432 if not provided)
+    
+        Using the *connection_factory* parameter a different class or connections
+        factory can be specified. It should be a callable object taking a dsn
+        argument.
+    
+        Using the *cursor_factory* parameter, a new default cursor factory will be
+        used by cursor().
+    
+        Using *async*=True an asynchronous connection will be created. *async_* is
+        a valid alias (for Python versions where ``async`` is a keyword).
+    
+        Any other keyword parameter will be passed to the underlying client
+        library: the list of supported parameters depends on the library version.
+    
+        """
+        kwasync = {}
+        if 'async' in kwargs:
+            kwasync['async'] = kwargs.pop('async')
+        if 'async_' in kwargs:
+            kwasync['async_'] = kwargs.pop('async_')
+    
+        dsn = _ext.make_dsn(dsn, **kwargs)
+>       conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+E       psycopg2.OperationalError: could not translate host name "ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech" to address: nodename nor servname provided, or not known
+
+venv/lib/python3.9/site-packages/psycopg2/__init__.py:122: OperationalError
+
+The above exception was the direct cause of the following exception:
+
+self = <DatabaseWrapper vendor='postgresql' alias='default'>
+
+    @contextmanager
+    def _nodb_cursor(self):
+        cursor = None
+        try:
+>           with super()._nodb_cursor() as cursor:
+
+venv/lib/python3.9/site-packages/django/db/backends/postgresql/base.py:400: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../../micromamba/lib/python3.9/contextlib.py:119: in __enter__
+    return next(self.gen)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:721: in _nodb_cursor
+    with conn.cursor() as cursor:
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:329: in cursor
+    return self._cursor()
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:305: in _cursor
+    self.ensure_connection()
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:288: in ensure_connection
+    self.connect()
+venv/lib/python3.9/site-packages/django/db/utils.py:91: in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:288: in ensure_connection
+    self.connect()
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:269: in connect
+    self.connection = self.get_new_connection(conn_params)
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/postgresql/base.py:275: in get_new_connection
+    connection = self.Database.connect(**conn_params)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dsn = 'dbname=postgres sslmode=require channel_binding=require client_encoding=UTF8 user=neondb_owner password=npg_l6LZFUwSa2Dt host=ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech'
+connection_factory = None, cursor_factory = <class 'psycopg2.extensions.cursor'>
+kwargs = {'channel_binding': 'require', 'client_encoding': 'UTF8', 'dbname': 'postgres', 'host': 'ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech', ...}
+kwasync = {}
+
+    def connect(dsn=None, connection_factory=None, cursor_factory=None, **kwargs):
+        """
+        Create a new database connection.
+    
+        The connection parameters can be specified as a string:
+    
+            conn = psycopg2.connect("dbname=test user=postgres password=secret")
+    
+        or using a set of keyword arguments:
+    
+            conn = psycopg2.connect(database="test", user="postgres", password="secret")
+    
+        Or as a mix of both. The basic connection parameters are:
+    
+        - *dbname*: the database name
+        - *database*: the database name (only as keyword argument)
+        - *user*: user name used to authenticate
+        - *password*: password used to authenticate
+        - *host*: database host address (defaults to UNIX socket if not provided)
+        - *port*: connection port number (defaults to 5432 if not provided)
+    
+        Using the *connection_factory* parameter a different class or connections
+        factory can be specified. It should be a callable object taking a dsn
+        argument.
+    
+        Using the *cursor_factory* parameter, a new default cursor factory will be
+        used by cursor().
+    
+        Using *async*=True an asynchronous connection will be created. *async_* is
+        a valid alias (for Python versions where ``async`` is a keyword).
+    
+        Any other keyword parameter will be passed to the underlying client
+        library: the list of supported parameters depends on the library version.
+    
+        """
+        kwasync = {}
+        if 'async' in kwargs:
+            kwasync['async'] = kwargs.pop('async')
+        if 'async_' in kwargs:
+            kwasync['async_'] = kwargs.pop('async_')
+    
+        dsn = _ext.make_dsn(dsn, **kwargs)
+>       conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+E       django.db.utils.OperationalError: could not translate host name "ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech" to address: nodename nor servname provided, or not known
+
+venv/lib/python3.9/site-packages/psycopg2/__init__.py:122: OperationalError
+
+During handling of the above exception, another exception occurred:
+
+self = <DatabaseWrapper vendor='postgresql' alias='default'>
+
+    @async_unsafe
+    def ensure_connection(self):
+        """Guarantee that a connection to the database is established."""
+        if self.connection is None:
+            with self.wrap_database_errors:
+>               self.connect()
+
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:288: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:269: in connect
+    self.connection = self.get_new_connection(conn_params)
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/postgresql/base.py:275: in get_new_connection
+    connection = self.Database.connect(**conn_params)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dsn = 'dbname=tasktrackr sslmode=require channel_binding=require client_encoding=UTF8 user=neondb_owner password=npg_l6LZFUwSa2Dt host=ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech'
+connection_factory = None, cursor_factory = <class 'psycopg2.extensions.cursor'>
+kwargs = {'channel_binding': 'require', 'client_encoding': 'UTF8', 'dbname': 'tasktrackr', 'host': 'ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech', ...}
+kwasync = {}
+
+    def connect(dsn=None, connection_factory=None, cursor_factory=None, **kwargs):
+        """
+        Create a new database connection.
+    
+        The connection parameters can be specified as a string:
+    
+            conn = psycopg2.connect("dbname=test user=postgres password=secret")
+    
+        or using a set of keyword arguments:
+    
+            conn = psycopg2.connect(database="test", user="postgres", password="secret")
+    
+        Or as a mix of both. The basic connection parameters are:
+    
+        - *dbname*: the database name
+        - *database*: the database name (only as keyword argument)
+        - *user*: user name used to authenticate
+        - *password*: password used to authenticate
+        - *host*: database host address (defaults to UNIX socket if not provided)
+        - *port*: connection port number (defaults to 5432 if not provided)
+    
+        Using the *connection_factory* parameter a different class or connections
+        factory can be specified. It should be a callable object taking a dsn
+        argument.
+    
+        Using the *cursor_factory* parameter, a new default cursor factory will be
+        used by cursor().
+    
+        Using *async*=True an asynchronous connection will be created. *async_* is
+        a valid alias (for Python versions where ``async`` is a keyword).
+    
+        Any other keyword parameter will be passed to the underlying client
+        library: the list of supported parameters depends on the library version.
+    
+        """
+        kwasync = {}
+        if 'async' in kwargs:
+            kwasync['async'] = kwargs.pop('async')
+        if 'async_' in kwargs:
+            kwasync['async_'] = kwargs.pop('async_')
+    
+        dsn = _ext.make_dsn(dsn, **kwargs)
+>       conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+E       psycopg2.OperationalError: could not translate host name "ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech" to address: nodename nor servname provided, or not known
+
+venv/lib/python3.9/site-packages/psycopg2/__init__.py:122: OperationalError
+
+The above exception was the direct cause of the following exception:
+
+request = <SubRequest '_django_db_marker' for <Function test_get_tasks_list>>
+
+    @pytest.fixture(autouse=True)
+    def _django_db_marker(request: pytest.FixtureRequest) -> None:
+        """Implement the django_db marker, internal to pytest-django."""
+        marker = request.node.get_closest_marker("django_db")
+        if marker:
+>           request.getfixturevalue("_django_db_helper")
+
+venv/lib/python3.9/site-packages/pytest_django/plugin.py:552: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+venv/lib/python3.9/site-packages/pytest_django/fixtures.py:198: in django_db_setup
+    db_cfg = setup_databases(
+venv/lib/python3.9/site-packages/django/test/utils.py:221: in setup_databases
+    connection.creation.create_test_db(
+venv/lib/python3.9/site-packages/django/db/backends/base/creation.py:62: in create_test_db
+    self._create_test_db(verbosity, autoclobber, keepdb)
+venv/lib/python3.9/site-packages/django/db/backends/base/creation.py:199: in _create_test_db
+    with self._nodb_cursor() as cursor:
+../../../../micromamba/lib/python3.9/contextlib.py:119: in __enter__
+    return next(self.gen)
+venv/lib/python3.9/site-packages/django/db/backends/postgresql/base.py:426: in _nodb_cursor
+    with conn.cursor() as cursor:
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:329: in cursor
+    return self._cursor()
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:305: in _cursor
+    self.ensure_connection()
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:288: in ensure_connection
+    self.connect()
+venv/lib/python3.9/site-packages/django/db/utils.py:91: in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:288: in ensure_connection
+    self.connect()
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:269: in connect
+    self.connection = self.get_new_connection(conn_params)
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/postgresql/base.py:275: in get_new_connection
+    connection = self.Database.connect(**conn_params)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dsn = 'dbname=tasktrackr sslmode=require channel_binding=require client_encoding=UTF8 user=neondb_owner password=npg_l6LZFUwSa2Dt host=ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech'
+connection_factory = None, cursor_factory = <class 'psycopg2.extensions.cursor'>
+kwargs = {'channel_binding': 'require', 'client_encoding': 'UTF8', 'dbname': 'tasktrackr', 'host': 'ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech', ...}
+kwasync = {}
+
+    def connect(dsn=None, connection_factory=None, cursor_factory=None, **kwargs):
+        """
+        Create a new database connection.
+    
+        The connection parameters can be specified as a string:
+    
+            conn = psycopg2.connect("dbname=test user=postgres password=secret")
+    
+        or using a set of keyword arguments:
+    
+            conn = psycopg2.connect(database="test", user="postgres", password="secret")
+    
+        Or as a mix of both. The basic connection parameters are:
+    
+        - *dbname*: the database name
+        - *database*: the database name (only as keyword argument)
+        - *user*: user name used to authenticate
+        - *password*: password used to authenticate
+        - *host*: database host address (defaults to UNIX socket if not provided)
+        - *port*: connection port number (defaults to 5432 if not provided)
+    
+        Using the *connection_factory* parameter a different class or connections
+        factory can be specified. It should be a callable object taking a dsn
+        argument.
+    
+        Using the *cursor_factory* parameter, a new default cursor factory will be
+        used by cursor().
+    
+        Using *async*=True an asynchronous connection will be created. *async_* is
+        a valid alias (for Python versions where ``async`` is a keyword).
+    
+        Any other keyword parameter will be passed to the underlying client
+        library: the list of supported parameters depends on the library version.
+    
+        """
+        kwasync = {}
+        if 'async' in kwargs:
+            kwasync['async'] = kwargs.pop('async')
+        if 'async_' in kwargs:
+            kwasync['async_'] = kwargs.pop('async_')
+    
+        dsn = _ext.make_dsn(dsn, **kwargs)
+>       conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+E       django.db.utils.OperationalError: could not translate host name "ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech" to address: nodename nor servname provided, or not known
+
+venv/lib/python3.9/site-packages/psycopg2/__init__.py:122: OperationalError
+___________________ ERROR at setup of test_user_registration ___________________
+
+self = <DatabaseWrapper vendor='postgresql' alias='__no_db__'>
+
+    @async_unsafe
+    def ensure_connection(self):
+        """Guarantee that a connection to the database is established."""
+        if self.connection is None:
+            with self.wrap_database_errors:
+>               self.connect()
+
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:288: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:269: in connect
+    self.connection = self.get_new_connection(conn_params)
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/postgresql/base.py:275: in get_new_connection
+    connection = self.Database.connect(**conn_params)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dsn = 'dbname=postgres sslmode=require channel_binding=require client_encoding=UTF8 user=neondb_owner password=npg_l6LZFUwSa2Dt host=ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech'
+connection_factory = None, cursor_factory = <class 'psycopg2.extensions.cursor'>
+kwargs = {'channel_binding': 'require', 'client_encoding': 'UTF8', 'dbname': 'postgres', 'host': 'ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech', ...}
+kwasync = {}
+
+    def connect(dsn=None, connection_factory=None, cursor_factory=None, **kwargs):
+        """
+        Create a new database connection.
+    
+        The connection parameters can be specified as a string:
+    
+            conn = psycopg2.connect("dbname=test user=postgres password=secret")
+    
+        or using a set of keyword arguments:
+    
+            conn = psycopg2.connect(database="test", user="postgres", password="secret")
+    
+        Or as a mix of both. The basic connection parameters are:
+    
+        - *dbname*: the database name
+        - *database*: the database name (only as keyword argument)
+        - *user*: user name used to authenticate
+        - *password*: password used to authenticate
+        - *host*: database host address (defaults to UNIX socket if not provided)
+        - *port*: connection port number (defaults to 5432 if not provided)
+    
+        Using the *connection_factory* parameter a different class or connections
+        factory can be specified. It should be a callable object taking a dsn
+        argument.
+    
+        Using the *cursor_factory* parameter, a new default cursor factory will be
+        used by cursor().
+    
+        Using *async*=True an asynchronous connection will be created. *async_* is
+        a valid alias (for Python versions where ``async`` is a keyword).
+    
+        Any other keyword parameter will be passed to the underlying client
+        library: the list of supported parameters depends on the library version.
+    
+        """
+        kwasync = {}
+        if 'async' in kwargs:
+            kwasync['async'] = kwargs.pop('async')
+        if 'async_' in kwargs:
+            kwasync['async_'] = kwargs.pop('async_')
+    
+        dsn = _ext.make_dsn(dsn, **kwargs)
+>       conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+E       psycopg2.OperationalError: could not translate host name "ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech" to address: nodename nor servname provided, or not known
+
+venv/lib/python3.9/site-packages/psycopg2/__init__.py:122: OperationalError
+
+The above exception was the direct cause of the following exception:
+
+self = <DatabaseWrapper vendor='postgresql' alias='default'>
+
+    @contextmanager
+    def _nodb_cursor(self):
+        cursor = None
+        try:
+>           with super()._nodb_cursor() as cursor:
+
+venv/lib/python3.9/site-packages/django/db/backends/postgresql/base.py:400: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../../micromamba/lib/python3.9/contextlib.py:119: in __enter__
+    return next(self.gen)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:721: in _nodb_cursor
+    with conn.cursor() as cursor:
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:329: in cursor
+    return self._cursor()
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:305: in _cursor
+    self.ensure_connection()
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:288: in ensure_connection
+    self.connect()
+venv/lib/python3.9/site-packages/django/db/utils.py:91: in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:288: in ensure_connection
+    self.connect()
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:269: in connect
+    self.connection = self.get_new_connection(conn_params)
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/postgresql/base.py:275: in get_new_connection
+    connection = self.Database.connect(**conn_params)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dsn = 'dbname=postgres sslmode=require channel_binding=require client_encoding=UTF8 user=neondb_owner password=npg_l6LZFUwSa2Dt host=ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech'
+connection_factory = None, cursor_factory = <class 'psycopg2.extensions.cursor'>
+kwargs = {'channel_binding': 'require', 'client_encoding': 'UTF8', 'dbname': 'postgres', 'host': 'ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech', ...}
+kwasync = {}
+
+    def connect(dsn=None, connection_factory=None, cursor_factory=None, **kwargs):
+        """
+        Create a new database connection.
+    
+        The connection parameters can be specified as a string:
+    
+            conn = psycopg2.connect("dbname=test user=postgres password=secret")
+    
+        or using a set of keyword arguments:
+    
+            conn = psycopg2.connect(database="test", user="postgres", password="secret")
+    
+        Or as a mix of both. The basic connection parameters are:
+    
+        - *dbname*: the database name
+        - *database*: the database name (only as keyword argument)
+        - *user*: user name used to authenticate
+        - *password*: password used to authenticate
+        - *host*: database host address (defaults to UNIX socket if not provided)
+        - *port*: connection port number (defaults to 5432 if not provided)
+    
+        Using the *connection_factory* parameter a different class or connections
+        factory can be specified. It should be a callable object taking a dsn
+        argument.
+    
+        Using the *cursor_factory* parameter, a new default cursor factory will be
+        used by cursor().
+    
+        Using *async*=True an asynchronous connection will be created. *async_* is
+        a valid alias (for Python versions where ``async`` is a keyword).
+    
+        Any other keyword parameter will be passed to the underlying client
+        library: the list of supported parameters depends on the library version.
+    
+        """
+        kwasync = {}
+        if 'async' in kwargs:
+            kwasync['async'] = kwargs.pop('async')
+        if 'async_' in kwargs:
+            kwasync['async_'] = kwargs.pop('async_')
+    
+        dsn = _ext.make_dsn(dsn, **kwargs)
+>       conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+E       django.db.utils.OperationalError: could not translate host name "ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech" to address: nodename nor servname provided, or not known
+
+venv/lib/python3.9/site-packages/psycopg2/__init__.py:122: OperationalError
+
+During handling of the above exception, another exception occurred:
+
+self = <DatabaseWrapper vendor='postgresql' alias='default'>
+
+    @async_unsafe
+    def ensure_connection(self):
+        """Guarantee that a connection to the database is established."""
+        if self.connection is None:
+            with self.wrap_database_errors:
+>               self.connect()
+
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:288: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:269: in connect
+    self.connection = self.get_new_connection(conn_params)
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/postgresql/base.py:275: in get_new_connection
+    connection = self.Database.connect(**conn_params)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dsn = 'dbname=tasktrackr sslmode=require channel_binding=require client_encoding=UTF8 user=neondb_owner password=npg_l6LZFUwSa2Dt host=ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech'
+connection_factory = None, cursor_factory = <class 'psycopg2.extensions.cursor'>
+kwargs = {'channel_binding': 'require', 'client_encoding': 'UTF8', 'dbname': 'tasktrackr', 'host': 'ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech', ...}
+kwasync = {}
+
+    def connect(dsn=None, connection_factory=None, cursor_factory=None, **kwargs):
+        """
+        Create a new database connection.
+    
+        The connection parameters can be specified as a string:
+    
+            conn = psycopg2.connect("dbname=test user=postgres password=secret")
+    
+        or using a set of keyword arguments:
+    
+            conn = psycopg2.connect(database="test", user="postgres", password="secret")
+    
+        Or as a mix of both. The basic connection parameters are:
+    
+        - *dbname*: the database name
+        - *database*: the database name (only as keyword argument)
+        - *user*: user name used to authenticate
+        - *password*: password used to authenticate
+        - *host*: database host address (defaults to UNIX socket if not provided)
+        - *port*: connection port number (defaults to 5432 if not provided)
+    
+        Using the *connection_factory* parameter a different class or connections
+        factory can be specified. It should be a callable object taking a dsn
+        argument.
+    
+        Using the *cursor_factory* parameter, a new default cursor factory will be
+        used by cursor().
+    
+        Using *async*=True an asynchronous connection will be created. *async_* is
+        a valid alias (for Python versions where ``async`` is a keyword).
+    
+        Any other keyword parameter will be passed to the underlying client
+        library: the list of supported parameters depends on the library version.
+    
+        """
+        kwasync = {}
+        if 'async' in kwargs:
+            kwasync['async'] = kwargs.pop('async')
+        if 'async_' in kwargs:
+            kwasync['async_'] = kwargs.pop('async_')
+    
+        dsn = _ext.make_dsn(dsn, **kwargs)
+>       conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+E       psycopg2.OperationalError: could not translate host name "ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech" to address: nodename nor servname provided, or not known
+
+venv/lib/python3.9/site-packages/psycopg2/__init__.py:122: OperationalError
+
+The above exception was the direct cause of the following exception:
+
+request = <SubRequest '_django_db_marker' for <Function test_user_registration>>
+
+    @pytest.fixture(autouse=True)
+    def _django_db_marker(request: pytest.FixtureRequest) -> None:
+        """Implement the django_db marker, internal to pytest-django."""
+        marker = request.node.get_closest_marker("django_db")
+        if marker:
+>           request.getfixturevalue("_django_db_helper")
+
+venv/lib/python3.9/site-packages/pytest_django/plugin.py:552: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+venv/lib/python3.9/site-packages/pytest_django/fixtures.py:198: in django_db_setup
+    db_cfg = setup_databases(
+venv/lib/python3.9/site-packages/django/test/utils.py:221: in setup_databases
+    connection.creation.create_test_db(
+venv/lib/python3.9/site-packages/django/db/backends/base/creation.py:62: in create_test_db
+    self._create_test_db(verbosity, autoclobber, keepdb)
+venv/lib/python3.9/site-packages/django/db/backends/base/creation.py:199: in _create_test_db
+    with self._nodb_cursor() as cursor:
+../../../../micromamba/lib/python3.9/contextlib.py:119: in __enter__
+    return next(self.gen)
+venv/lib/python3.9/site-packages/django/db/backends/postgresql/base.py:426: in _nodb_cursor
+    with conn.cursor() as cursor:
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:329: in cursor
+    return self._cursor()
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:305: in _cursor
+    self.ensure_connection()
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:288: in ensure_connection
+    self.connect()
+venv/lib/python3.9/site-packages/django/db/utils.py:91: in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:288: in ensure_connection
+    self.connect()
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:269: in connect
+    self.connection = self.get_new_connection(conn_params)
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/postgresql/base.py:275: in get_new_connection
+    connection = self.Database.connect(**conn_params)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dsn = 'dbname=tasktrackr sslmode=require channel_binding=require client_encoding=UTF8 user=neondb_owner password=npg_l6LZFUwSa2Dt host=ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech'
+connection_factory = None, cursor_factory = <class 'psycopg2.extensions.cursor'>
+kwargs = {'channel_binding': 'require', 'client_encoding': 'UTF8', 'dbname': 'tasktrackr', 'host': 'ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech', ...}
+kwasync = {}
+
+    def connect(dsn=None, connection_factory=None, cursor_factory=None, **kwargs):
+        """
+        Create a new database connection.
+    
+        The connection parameters can be specified as a string:
+    
+            conn = psycopg2.connect("dbname=test user=postgres password=secret")
+    
+        or using a set of keyword arguments:
+    
+            conn = psycopg2.connect(database="test", user="postgres", password="secret")
+    
+        Or as a mix of both. The basic connection parameters are:
+    
+        - *dbname*: the database name
+        - *database*: the database name (only as keyword argument)
+        - *user*: user name used to authenticate
+        - *password*: password used to authenticate
+        - *host*: database host address (defaults to UNIX socket if not provided)
+        - *port*: connection port number (defaults to 5432 if not provided)
+    
+        Using the *connection_factory* parameter a different class or connections
+        factory can be specified. It should be a callable object taking a dsn
+        argument.
+    
+        Using the *cursor_factory* parameter, a new default cursor factory will be
+        used by cursor().
+    
+        Using *async*=True an asynchronous connection will be created. *async_* is
+        a valid alias (for Python versions where ``async`` is a keyword).
+    
+        Any other keyword parameter will be passed to the underlying client
+        library: the list of supported parameters depends on the library version.
+    
+        """
+        kwasync = {}
+        if 'async' in kwargs:
+            kwasync['async'] = kwargs.pop('async')
+        if 'async_' in kwargs:
+            kwasync['async_'] = kwargs.pop('async_')
+    
+        dsn = _ext.make_dsn(dsn, **kwargs)
+>       conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+E       django.db.utils.OperationalError: could not translate host name "ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech" to address: nodename nor servname provided, or not known
+
+venv/lib/python3.9/site-packages/psycopg2/__init__.py:122: OperationalError
+______________________ ERROR at setup of test_user_login _______________________
+
+self = <DatabaseWrapper vendor='postgresql' alias='__no_db__'>
+
+    @async_unsafe
+    def ensure_connection(self):
+        """Guarantee that a connection to the database is established."""
+        if self.connection is None:
+            with self.wrap_database_errors:
+>               self.connect()
+
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:288: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:269: in connect
+    self.connection = self.get_new_connection(conn_params)
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/postgresql/base.py:275: in get_new_connection
+    connection = self.Database.connect(**conn_params)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dsn = 'dbname=postgres sslmode=require channel_binding=require client_encoding=UTF8 user=neondb_owner password=npg_l6LZFUwSa2Dt host=ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech'
+connection_factory = None, cursor_factory = <class 'psycopg2.extensions.cursor'>
+kwargs = {'channel_binding': 'require', 'client_encoding': 'UTF8', 'dbname': 'postgres', 'host': 'ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech', ...}
+kwasync = {}
+
+    def connect(dsn=None, connection_factory=None, cursor_factory=None, **kwargs):
+        """
+        Create a new database connection.
+    
+        The connection parameters can be specified as a string:
+    
+            conn = psycopg2.connect("dbname=test user=postgres password=secret")
+    
+        or using a set of keyword arguments:
+    
+            conn = psycopg2.connect(database="test", user="postgres", password="secret")
+    
+        Or as a mix of both. The basic connection parameters are:
+    
+        - *dbname*: the database name
+        - *database*: the database name (only as keyword argument)
+        - *user*: user name used to authenticate
+        - *password*: password used to authenticate
+        - *host*: database host address (defaults to UNIX socket if not provided)
+        - *port*: connection port number (defaults to 5432 if not provided)
+    
+        Using the *connection_factory* parameter a different class or connections
+        factory can be specified. It should be a callable object taking a dsn
+        argument.
+    
+        Using the *cursor_factory* parameter, a new default cursor factory will be
+        used by cursor().
+    
+        Using *async*=True an asynchronous connection will be created. *async_* is
+        a valid alias (for Python versions where ``async`` is a keyword).
+    
+        Any other keyword parameter will be passed to the underlying client
+        library: the list of supported parameters depends on the library version.
+    
+        """
+        kwasync = {}
+        if 'async' in kwargs:
+            kwasync['async'] = kwargs.pop('async')
+        if 'async_' in kwargs:
+            kwasync['async_'] = kwargs.pop('async_')
+    
+        dsn = _ext.make_dsn(dsn, **kwargs)
+>       conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+E       psycopg2.OperationalError: could not translate host name "ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech" to address: nodename nor servname provided, or not known
+
+venv/lib/python3.9/site-packages/psycopg2/__init__.py:122: OperationalError
+
+The above exception was the direct cause of the following exception:
+
+self = <DatabaseWrapper vendor='postgresql' alias='default'>
+
+    @contextmanager
+    def _nodb_cursor(self):
+        cursor = None
+        try:
+>           with super()._nodb_cursor() as cursor:
+
+venv/lib/python3.9/site-packages/django/db/backends/postgresql/base.py:400: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../../micromamba/lib/python3.9/contextlib.py:119: in __enter__
+    return next(self.gen)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:721: in _nodb_cursor
+    with conn.cursor() as cursor:
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:329: in cursor
+    return self._cursor()
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:305: in _cursor
+    self.ensure_connection()
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:288: in ensure_connection
+    self.connect()
+venv/lib/python3.9/site-packages/django/db/utils.py:91: in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:288: in ensure_connection
+    self.connect()
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:269: in connect
+    self.connection = self.get_new_connection(conn_params)
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/postgresql/base.py:275: in get_new_connection
+    connection = self.Database.connect(**conn_params)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dsn = 'dbname=postgres sslmode=require channel_binding=require client_encoding=UTF8 user=neondb_owner password=npg_l6LZFUwSa2Dt host=ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech'
+connection_factory = None, cursor_factory = <class 'psycopg2.extensions.cursor'>
+kwargs = {'channel_binding': 'require', 'client_encoding': 'UTF8', 'dbname': 'postgres', 'host': 'ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech', ...}
+kwasync = {}
+
+    def connect(dsn=None, connection_factory=None, cursor_factory=None, **kwargs):
+        """
+        Create a new database connection.
+    
+        The connection parameters can be specified as a string:
+    
+            conn = psycopg2.connect("dbname=test user=postgres password=secret")
+    
+        or using a set of keyword arguments:
+    
+            conn = psycopg2.connect(database="test", user="postgres", password="secret")
+    
+        Or as a mix of both. The basic connection parameters are:
+    
+        - *dbname*: the database name
+        - *database*: the database name (only as keyword argument)
+        - *user*: user name used to authenticate
+        - *password*: password used to authenticate
+        - *host*: database host address (defaults to UNIX socket if not provided)
+        - *port*: connection port number (defaults to 5432 if not provided)
+    
+        Using the *connection_factory* parameter a different class or connections
+        factory can be specified. It should be a callable object taking a dsn
+        argument.
+    
+        Using the *cursor_factory* parameter, a new default cursor factory will be
+        used by cursor().
+    
+        Using *async*=True an asynchronous connection will be created. *async_* is
+        a valid alias (for Python versions where ``async`` is a keyword).
+    
+        Any other keyword parameter will be passed to the underlying client
+        library: the list of supported parameters depends on the library version.
+    
+        """
+        kwasync = {}
+        if 'async' in kwargs:
+            kwasync['async'] = kwargs.pop('async')
+        if 'async_' in kwargs:
+            kwasync['async_'] = kwargs.pop('async_')
+    
+        dsn = _ext.make_dsn(dsn, **kwargs)
+>       conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+E       django.db.utils.OperationalError: could not translate host name "ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech" to address: nodename nor servname provided, or not known
+
+venv/lib/python3.9/site-packages/psycopg2/__init__.py:122: OperationalError
+
+During handling of the above exception, another exception occurred:
+
+self = <DatabaseWrapper vendor='postgresql' alias='default'>
+
+    @async_unsafe
+    def ensure_connection(self):
+        """Guarantee that a connection to the database is established."""
+        if self.connection is None:
+            with self.wrap_database_errors:
+>               self.connect()
+
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:288: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:269: in connect
+    self.connection = self.get_new_connection(conn_params)
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/postgresql/base.py:275: in get_new_connection
+    connection = self.Database.connect(**conn_params)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dsn = 'dbname=tasktrackr sslmode=require channel_binding=require client_encoding=UTF8 user=neondb_owner password=npg_l6LZFUwSa2Dt host=ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech'
+connection_factory = None, cursor_factory = <class 'psycopg2.extensions.cursor'>
+kwargs = {'channel_binding': 'require', 'client_encoding': 'UTF8', 'dbname': 'tasktrackr', 'host': 'ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech', ...}
+kwasync = {}
+
+    def connect(dsn=None, connection_factory=None, cursor_factory=None, **kwargs):
+        """
+        Create a new database connection.
+    
+        The connection parameters can be specified as a string:
+    
+            conn = psycopg2.connect("dbname=test user=postgres password=secret")
+    
+        or using a set of keyword arguments:
+    
+            conn = psycopg2.connect(database="test", user="postgres", password="secret")
+    
+        Or as a mix of both. The basic connection parameters are:
+    
+        - *dbname*: the database name
+        - *database*: the database name (only as keyword argument)
+        - *user*: user name used to authenticate
+        - *password*: password used to authenticate
+        - *host*: database host address (defaults to UNIX socket if not provided)
+        - *port*: connection port number (defaults to 5432 if not provided)
+    
+        Using the *connection_factory* parameter a different class or connections
+        factory can be specified. It should be a callable object taking a dsn
+        argument.
+    
+        Using the *cursor_factory* parameter, a new default cursor factory will be
+        used by cursor().
+    
+        Using *async*=True an asynchronous connection will be created. *async_* is
+        a valid alias (for Python versions where ``async`` is a keyword).
+    
+        Any other keyword parameter will be passed to the underlying client
+        library: the list of supported parameters depends on the library version.
+    
+        """
+        kwasync = {}
+        if 'async' in kwargs:
+            kwasync['async'] = kwargs.pop('async')
+        if 'async_' in kwargs:
+            kwasync['async_'] = kwargs.pop('async_')
+    
+        dsn = _ext.make_dsn(dsn, **kwargs)
+>       conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+E       psycopg2.OperationalError: could not translate host name "ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech" to address: nodename nor servname provided, or not known
+
+venv/lib/python3.9/site-packages/psycopg2/__init__.py:122: OperationalError
+
+The above exception was the direct cause of the following exception:
+
+request = <SubRequest '_django_db_marker' for <Function test_user_login>>
+
+    @pytest.fixture(autouse=True)
+    def _django_db_marker(request: pytest.FixtureRequest) -> None:
+        """Implement the django_db marker, internal to pytest-django."""
+        marker = request.node.get_closest_marker("django_db")
+        if marker:
+>           request.getfixturevalue("_django_db_helper")
+
+venv/lib/python3.9/site-packages/pytest_django/plugin.py:552: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+venv/lib/python3.9/site-packages/pytest_django/fixtures.py:198: in django_db_setup
+    db_cfg = setup_databases(
+venv/lib/python3.9/site-packages/django/test/utils.py:221: in setup_databases
+    connection.creation.create_test_db(
+venv/lib/python3.9/site-packages/django/db/backends/base/creation.py:62: in create_test_db
+    self._create_test_db(verbosity, autoclobber, keepdb)
+venv/lib/python3.9/site-packages/django/db/backends/base/creation.py:199: in _create_test_db
+    with self._nodb_cursor() as cursor:
+../../../../micromamba/lib/python3.9/contextlib.py:119: in __enter__
+    return next(self.gen)
+venv/lib/python3.9/site-packages/django/db/backends/postgresql/base.py:426: in _nodb_cursor
+    with conn.cursor() as cursor:
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:329: in cursor
+    return self._cursor()
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:305: in _cursor
+    self.ensure_connection()
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:288: in ensure_connection
+    self.connect()
+venv/lib/python3.9/site-packages/django/db/utils.py:91: in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:288: in ensure_connection
+    self.connect()
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/base/base.py:269: in connect
+    self.connection = self.get_new_connection(conn_params)
+venv/lib/python3.9/site-packages/django/utils/asyncio.py:26: in inner
+    return func(*args, **kwargs)
+venv/lib/python3.9/site-packages/django/db/backends/postgresql/base.py:275: in get_new_connection
+    connection = self.Database.connect(**conn_params)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dsn = 'dbname=tasktrackr sslmode=require channel_binding=require client_encoding=UTF8 user=neondb_owner password=npg_l6LZFUwSa2Dt host=ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech'
+connection_factory = None, cursor_factory = <class 'psycopg2.extensions.cursor'>
+kwargs = {'channel_binding': 'require', 'client_encoding': 'UTF8', 'dbname': 'tasktrackr', 'host': 'ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech', ...}
+kwasync = {}
+
+    def connect(dsn=None, connection_factory=None, cursor_factory=None, **kwargs):
+        """
+        Create a new database connection.
+    
+        The connection parameters can be specified as a string:
+    
+            conn = psycopg2.connect("dbname=test user=postgres password=secret")
+    
+        or using a set of keyword arguments:
+    
+            conn = psycopg2.connect(database="test", user="postgres", password="secret")
+    
+        Or as a mix of both. The basic connection parameters are:
+    
+        - *dbname*: the database name
+        - *database*: the database name (only as keyword argument)
+        - *user*: user name used to authenticate
+        - *password*: password used to authenticate
+        - *host*: database host address (defaults to UNIX socket if not provided)
+        - *port*: connection port number (defaults to 5432 if not provided)
+    
+        Using the *connection_factory* parameter a different class or connections
+        factory can be specified. It should be a callable object taking a dsn
+        argument.
+    
+        Using the *cursor_factory* parameter, a new default cursor factory will be
+        used by cursor().
+    
+        Using *async*=True an asynchronous connection will be created. *async_* is
+        a valid alias (for Python versions where ``async`` is a keyword).
+    
+        Any other keyword parameter will be passed to the underlying client
+        library: the list of supported parameters depends on the library version.
+    
+        """
+        kwasync = {}
+        if 'async' in kwargs:
+            kwasync['async'] = kwargs.pop('async')
+        if 'async_' in kwargs:
+            kwasync['async_'] = kwargs.pop('async_')
+    
+        dsn = _ext.make_dsn(dsn, **kwargs)
+>       conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+E       django.db.utils.OperationalError: could not translate host name "ep-green-surf-adxbmv4l-pooler.c-2.us-east-1.aws.neon.tech" to address: nodename nor servname provided, or not known
+
+venv/lib/python3.9/site-packages/psycopg2/__init__.py:122: OperationalError
+=============================== warnings summary ===============================
+tests/test_projects.py::test_create_project
+  /Users/ozkancimenli/Desktop/new github projects/tasktrackr-pro/backend/venv/lib/python3.9/site-packages/django/db/backends/postgresql/base.py:405: RuntimeWarning: Normally Django will use a connection to the 'postgres' database to avoid running initialization queries against the production database when it's not needed (for example, when running tests). Django was unable to create a connection to the 'postgres' database and will use the first PostgreSQL database instead.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+ERROR tests/test_projects.py::test_create_project - django.db.utils.Operation...
+ERROR tests/test_projects.py::test_get_projects_list - django.db.utils.Operat...
+ERROR tests/test_tasks.py::test_create_task - django.db.utils.OperationalErro...
+ERROR tests/test_tasks.py::test_get_tasks_list - django.db.utils.OperationalE...
+ERROR tests/test_users.py::test_user_registration - django.db.utils.Operation...
+ERROR tests/test_users.py::test_user_login - django.db.utils.OperationalError...
+1 warning, 6 errors in 0.47s
